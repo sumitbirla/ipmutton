@@ -1,0 +1,82 @@
+<div class="container-fluid jumbotron text-center">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-7">
+                <h3>Your IP address:</h3>
+				<% if request.remote_ip.include?(":") %>
+					<h1 class="mt-3" style="font-size: 1.4em; text-decoration: underline;"><%= request.remote_ip %></h1>
+					<h3 class="ipv4 mb-4"></h3>
+				<% else %>
+					<h1><%= request.remote_ip %></h1>
+					<p>You don't appear to have an IPv6 address</p>
+				<% end %>
+
+				<% unless @city.nil? %>
+                	<h6>
+						<%= @city['city']['names']['en'] %>, 
+						<%= @city['subdivisions'][0]['names']['en'] %>, 
+						<%= @city['country']['names']['en'] %>
+					</h6>
+                <% end %>
+
+				<% unless @asn.nil? %>
+					<h6>AS<%= @asn["autonomous_system_number"] %>: <%= @asn["autonomous_system_organization"] %></h6>
+				<% end %>
+            </div>
+            <div class="col-md2">
+                <img src="/images/sheep.gif"/>
+            </div>
+        </div>
+    </div>
+
+	<% req_headers = self.request.env.select {|k,v| k =~ /^HTTP_/}  %>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Request headers:</h4>
+                <table class="table table-condensed table-bordered table-responsive">
+				<% req_headers.each do |k, v| 
+					next if k.start_with?("HTTP_X") %>
+					<tr>
+						<td><%= k %></td>
+						<td><%= v %></td>
+					</tr>
+				<% end %>	
+                </table>
+
+				<h4 class="mt-5">Script Friendly URL's</h4>
+        		<table class="table table-bordered atable-responsive urls">
+            		<tr><td><%= link_to "http://ipmutton.com/ip.txt", "http://ipmutton.com/ip.txt" %></td></tr>
+            		<tr><td><%= link_to "http://ipmutton.com/ip.json", "http://ipmutton.com/ip.json" %></td></tr>
+        		</table>
+            </div>
+
+        </div>  <!-- row --!>
+    </div>
+
+	<div class="jumbotron mt-5 mb-0">
+		<footer class="container">
+			<div class="row">
+				<div class="col-md-12">
+					This page includes GeoLite2 data created by <a href="http://www.maxmind.com">MaxMind</a>. &nbsp;  
+					Website maintained by <a href="http://sumitbirla.me">Sumit Birla</a>.
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<% if request.remote_ip.include?(":") %>
+		<script
+  			src="https://code.jquery.com/jquery-3.4.1.min.js"
+  			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  			crossorigin="anonymous"></script>
+		<script>
+			$(document).ready(function() {
+				jQuery.get( "http://4.ipmutton.com/ip", function( data ) {
+  					$( ".ipv4" ).html( data );
+				});
+			});
+		</script>
+	<% end %>
