@@ -24,15 +24,16 @@ module Ipmutton
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-	config.middleware.delete ActionDispatch::Cookies
-	config.middleware.delete ActionDispatch::Session::CookieStore
-	config.middleware.delete ActionDispatch::Flash
-	config.middleware.delete ActionDispatch::HostAuthorization
-	config.middleware.delete ActionDispatch::RequestId
-	config.middleware.delete Rack::Sendfile
-	config.middleware.delete Rack::TempfileReaper
-	config.middleware.delete Rack::ConditionalGet
-	config.middleware.delete Rack::ETag
+	  config.middleware.delete ActionDispatch::Cookies
+	  config.middleware.delete ActionDispatch::Session::CookieStore
+	  config.middleware.delete ActionDispatch::Flash
+	  config.middleware.delete ActionDispatch::HostAuthorization
+	  config.middleware.delete ActionDispatch::RequestId
+	  config.middleware.delete Rack::Sendfile
+	  config.middleware.delete Rack::TempfileReaper
+	  config.middleware.delete Rack::ConditionalGet
+	  config.middleware.delete Rack::ETag
+    config.middleware.delete Rack::Logger
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
