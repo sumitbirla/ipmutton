@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.text { render plain: request.remote_ip }
       format.json { render json: { ip_adress: request.remote_ip, location: @city, asn: @asn } }
-   	end
+    end
   end
 
   private
